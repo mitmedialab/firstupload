@@ -7,4 +7,4 @@ import os
 if os.environ.get("DEBUG"):
     app.run(debug = True)
 else:
-	app.run()
+	app.run(port=os.environ.get("PORT", 5000))
