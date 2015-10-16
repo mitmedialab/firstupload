@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div id="submit">
+		<h1>Search</h1>
+		<form action="{{ url_for('search') }}" method="post" name='search'>
+			
+				<p>
+					Video link:<br>
+					{{ form.videoid(size=80) }}<br>
+				</p>
+			<p><input type='submit' value='Search'</p>
+		</form>
+	</div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<div id = "fon"><img src="http://i.imgur.com/P1F4HXG.jpg?1" title="source: imgur.com" width = "300px" /></div>
+
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class = "resultstitle">
+		<h1>Search results for: <br> {{ videotitle }} <a href = 'http://www.youtube.com/watch?v={{ query }}'>({{ query }})</a></h1>
+		Upload Date: {{ uploaddate }}
+	</div>
+
+	</div class = "alchemy">
+		<h2>Text entered:</h2>
+		<center>{{ text }}</center><br>
+		<br>
+		
+		<h2>First entities:</h2>
+		<center>{{ entitylist }}</center><br>
+		<br>
+		<h2>First keywords:</h2>
+		<center>{{ keywordlist }}</center><br>
+	</div>
+	<hr>
+
+	<div class="results">
+		<h2>Search: {{ important }}</h2>
+		{% for video in keywordvideo_prev: %}
+			<p class = "earlier">
+				<br>
+				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
+				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
+				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
+				{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{video.get('link') }}</a>     <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+			</p> <hr>
+
+		{% endfor %}
+
+		{% for video in keyword_videos: %}
+			
+			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
+			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
+			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
+			{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>     <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+
+			<br><hr>
+
+		{% endfor %}
+	</div>
+
+
+	<div id = "divider">
+		<br>
+	</div>
+
+	<div class="results">
+
+		<p>
+			<h2>Search: {{ videotitle }}</h2>
+	
+			{% for video in titlesvideo_prev: %}
+				<p class = "earlier">
+					<br>
+					<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
+					<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
+					<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
+					{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>    <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+				</p><hr>
+	
+			{% endfor %}
+
+
+			{% for video in titlesearch_videos: %}
+	
+				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
+				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
+				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
+				{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>      <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+
+				<br><hr>
+	
+			{% endfor %}
+	
+		</p>
+	</div>
+
+{% endblock %}
