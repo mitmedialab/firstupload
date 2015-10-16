@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-#!/flask/bin/python
+#!/usr/bin/env python
 
 import os
 import sys
