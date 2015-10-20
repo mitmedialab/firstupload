@@ -27,7 +27,7 @@
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
-				{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{video.get('link') }}</a>     <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+				{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{video.get('link') }}</a>     <a href = 'http://firstupload.herokuapp.com/search_results/{{ video.get('link') }}'>Search this video</a>
 			</p> <hr>
 
 		{% endfor %}
@@ -37,7 +37,7 @@
 			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
 			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
 			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
-			{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>     <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+			{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>     <a href = 'http://firstupload.herokuapp.com/search_results/{{ video.get('link') }}'>Search this video</a>
 
 			<br><hr>
 
@@ -60,7 +60,7 @@
 					<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
 					<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
 					<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
-					{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>    <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+					{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>    <a href = 'http://firstupload.herokuapp.com/search_results/{{ video.get('link') }}'>Search this video</a>
 				</p><hr>
 	
 			{% endfor %}
@@ -71,7 +71,7 @@
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/3.jpg><br>
-				{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>      <a href = 'http://127.0.0.1:5000/search_results/{{ video.get('link') }}'>Search this video</a>
+				{{ video.get('title') }} (published on:{{ video.get('time') }}) <a href='http://www.youtube.com/watch?v={{ video.get('link')}}'>{{ video.get('link') }}</a>      <a href = 'http://firstupload.herokuapp.com/search_results/{{ video.get('link') }}'>Search this video</a>
 
 				<br><hr>
 	
