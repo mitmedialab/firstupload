@@ -28,43 +28,46 @@ def search_results(query):
 	'''
 	url = query
 	video = pafy.new(url)									#new pafy video object
-	yttext = codecs.open('youtubetext.txt','w+','utf-8')
+	#yttext = codecs.open('youtubetext.txt','w+','utf-8')
 	description = video.description
-	description_noURL = noURL(description)		#removes links from descriptions
-	yttext.write(description_noURL+' ')			#writes file with description and title of video
-	yttext.write(video.title)
+	description_noURL = removeURLs(description)		#removes links from descriptions
+	#yttext.write(description_noURL+' ')			#writes file with description and title of video
+	yttext = description_noURL
+	yttext+=" "
+	yttext+=video.title
 
-	#yttext.write(twitterSearch(url))
-
-
-	yttext.close()
+	twitterText = twitterSearch(url)
+	yttext+=" "
+	yttext+= twitterText
 	
-	newfile = codecs.open('youtubetext.txt','r')
-	inputtext = newfile.read()
+	#newfile = codecs.open('youtubetext.txt','r')
+	#inputtext = newfile.read()
 	alchemy = AlchemyAPI()
 
-	entities = alchemy.entities('text', inputtext, {'sentiment': 1, 'outputMode': 'json'})		#finds entities and keywords using alchemy API
-	keywords = alchemy.keywords('text', inputtext, {'sentiment': 1, 'outputMode': 'json'})
-	newfile.close()
+	entities = alchemy.entities('text', yttext, {'sentiment': 1, 'outputMode': 'json'})		#finds entities and keywords using alchemy API
+	keywords = alchemy.keywords('text', yttext, {'sentiment': 1, 'outputMode': 'json'})
+	#newfile.close()
 	
+	IMPORTANCE_BOUNDARY = .8
+
 	entitylist = ''
 	keywordlist = ''
-	important = ''
+	words_to_search = ''
 	try:
-		allentities = entities['entities']
+		all_entities = entities['entities']
 	except KeyError:
 		print ("empty entities")
-	for entity in allentities:																	#creates a list of all entities and keywords for reference
-		if float(entity['relevance']) > .8:													#filters out any entities/keywords with relevance less than 9 (out of 10)
-			important += entity['text']+' '
+	for entity in all_entities:																	#creates a list of all entities and keywords for reference
+		if float(entity['relevance']) > IMPORTANCE_BOUNDARY:													#filters out any entities/keywords with relevance less than 9 (out of 10)
+			words_to_search += entity['text']+' '
 		entitylist += smart_str(entity['text'])+'('+smart_str(entity['relevance'])+')'+' '
 	allkeywords = keywords['keywords']
 	for keyword in allkeywords:
-		if float(keyword['relevance']) > .8:
-			important += keyword['text']+' '
+		if float(keyword['relevance']) > IMPORTANCE_BOUNDARY:
+			words_to_search += keyword['text']+' '
 		keywordlist += smart_str(keyword['text'])+'('+smart_str(keyword['relevance'])+')'+' '
 
-	keyword_videos = youtube_search(important)
+	keyword_videos = youtube_search(words_to_search)
 
 	if entitylist == '':
 		entitylist = "None Detected"
@@ -100,8 +103,8 @@ def search_results(query):
 							query=query,
 							entitylist = entitylist,
 							keywordlist = keywordlist,
-							text = inputtext,
-							important = important,
+							text = yttext,
+							words_to_search = words_to_search,
 							keyword_videos = keyword_videos,
 							keywordvideo_prev = keywordvideo_prev,
 							videotitle = videotitle,

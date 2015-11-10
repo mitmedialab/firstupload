@@ -111,14 +111,14 @@ class AlchemyAPI:
         if key == '':
             # The key file should't be blank
             print(
-                'The api_key.txt file appears to be blank, please run: python alchemyapi.py YOUR_KEY_HERE')
+                'The API key variable (os.ALCHEMY_KEY) seems to be blank. Please add environment variable for the API key.')
             print(
                 'If you do not have an API Key from AlchemyAPI, please register for one at: http://www.alchemyapi.com/api/register.html')
             sys.exit(0)
         elif len(key) != 40:
             # Keys should be exactly 40 characters long
             print(
-                'It appears that the key in api_key.txt is invalid. Please make sure the file only includes the API key, and it is the correct one.')
+                'It appears that the api key variable (os.ALCHEMY_KEY) is invalid. Please make sure the key is the correct one.')
             sys.exit(0)
         else:
             # setup the key
@@ -249,33 +249,32 @@ class AlchemyAPI:
             print(e)
             return {'status': 'ERROR', 'statusInfo': 'parse-error'}
 
-def noURL(description):
+def removeURLs(description):
     description_noURL = re.sub(r'(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}     /)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))', '', description)
     return description_noURL
 
-access_token = os.environ.get("ALCHEMY_ACCESS_TOKEN")
-access_token_secret = os.environ.get("ALCHEMY_ACCESS_TOKEN_SECRET")
-consumer_key = os.environ.get("ALCHEMY_CONSUMER_KEY")
-consumer_secret = os.environ.get("ALCHEMY_CONSUMER_SECRET")
+access_token = os.environ.get("TWEEPY_ACCESS_TOKEN")
+access_token_secret = os.environ.get("TWEEPY_ACCESS_TOKEN_SECRET")
+consumer_key = os.environ.get("TWEEPY_CONSUMER_KEY")
+consumer_secret = os.environ.get("TWEEPY_CONSUMER_SECRET")
 alchemy_key = os.environ.get("ALCHEMY_KEY")
 
 #Oauth stuff
-auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-auth.set_access_token(access_token, access_token_secret)
+tweepy_auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+tweepy_auth.set_access_token(access_token, access_token_secret)
 
-
-api = tweepy.API(auth)
+#initialize tweepy API object
+tweepy_api = tweepy.API(tweepy_auth)
 
 def twitterSearch(url):
     query = url
     tweets = ''
-    for tweet in tweepy.Cursor(api.search,q=query).items():
+    for tweet in tweepy.Cursor(tweepy_api.search,q=query).items():
         #avoid UnicodeEncodeError:
         #status = tweet.text.encode('ascii','ignore')
-        status_noURL = noURL(tweet.text)
-        tweets += status_noURL + '\n'
+        status_without_URLs = removeURLs(tweet.text)
+        tweets += status_without_URLs + '\n'
     return tweets
 
 newobject = AlchemyAPI()
-print (newobject)
     
