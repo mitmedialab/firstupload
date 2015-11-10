@@ -12,16 +12,16 @@
 		<br>
 		
 		<h2>First entities:</h2>
-		<center>{{ entitylist }}</center><br>
+		<center>{{ entity_list }}</center><br>
 		<br>
 		<h2>First keywords:</h2>
-		<center>{{ keywordlist }}</center><br>
+		<center>{{ keyword_list }}</center><br>
 	</div>
 	<hr>
 
 	<div class="results">
 		<h2>Search: {{ words_to_search }}</h2>
-		{% for video in keywordvideo_prev: %}
+		{% for video in keyword_video_earlier: %}
 			<p class = "earlier">
 				<br>
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
@@ -32,7 +32,7 @@
 
 		{% endfor %}
 
-		{% for video in keyword_videos: %}
+		{% for video in keyword_video_later: %}
 			
 			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
 			<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>
@@ -54,7 +54,7 @@
 		<p>
 			<h2>Search: {{ videotitle }}</h2>
 	
-			{% for video in titlesvideo_prev: %}
+			{% for video in title_video_earlier: %}
 				<p class = "earlier">
 					<br>
 					<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
@@ -66,7 +66,7 @@
 			{% endfor %}
 
 
-			{% for video in titlesearch_videos: %}
+			{% for video in title_video_later: %}
 	
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/1.jpg>
 				<img class = "image" src=http://i.ytimg.com/vi/{{ video.get('link') }}/2.jpg>

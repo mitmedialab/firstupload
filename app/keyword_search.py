@@ -265,12 +265,10 @@ tweepy_auth.set_access_token(access_token, access_token_secret)
 #initialize tweepy API object
 tweepy_api = tweepy.API(tweepy_auth)
 
-def twitterSearch(url):
+def twitter_search(url):
     query = url
     tweets = ''
     for tweet in tweepy.Cursor(tweepy_api.search,q=query).items():
-        #avoid UnicodeEncodeError:
-        #status = tweet.text.encode('ascii','ignore')
         status_without_URLs = removeURLs(tweet.text)
         tweets += status_without_URLs + '\n'
     return tweets

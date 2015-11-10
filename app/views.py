@@ -36,9 +36,9 @@ def search_results(query):
 	yttext+=" "
 	yttext+=video.title
 
-	twitterText = twitterSearch(url)
+	twitter_text = twitter_search(url)
 	yttext+=" "
-	yttext+= twitterText
+	yttext+= twitter_text
 	
 	#newfile = codecs.open('youtubetext.txt','r')
 	#inputtext = newfile.read()
@@ -50,29 +50,30 @@ def search_results(query):
 	
 	IMPORTANCE_BOUNDARY = .8
 
-	entitylist = ''
-	keywordlist = ''
+	entity_list = ''
+	keyword_list = ''
 	words_to_search = ''
 	try:
 		all_entities = entities['entities']
+		for entity in all_entities:	
+			if float(entity['relevance']) > IMPORTANCE_BOUNDARY: #filters out any entities/keywords with relevance less than importance boundary
+				words_to_search += entity['text']+' '
+			entity_list += entity['text']+'('+entity['relevance']+')'+' '
 	except KeyError:
 		print ("empty entities")
-	for entity in all_entities:																	#creates a list of all entities and keywords for reference
-		if float(entity['relevance']) > IMPORTANCE_BOUNDARY:													#filters out any entities/keywords with relevance less than 9 (out of 10)
-			words_to_search += entity['text']+' '
-		entitylist += entity['text']+'('+entity['relevance']+')'+' '
-	allkeywords = keywords['keywords']
-	for keyword in allkeywords:
+	
+	all_keywords = keywords['keywords']
+	for keyword in all_keywords:
 		if float(keyword['relevance']) > IMPORTANCE_BOUNDARY:
 			words_to_search += keyword['text']+' '
-		keywordlist += keyword['text']+'('+keyword['relevance']+')'+' '
+		keyword_list += keyword['text']+'('+keyword['relevance']+')'+' '
 
 	keyword_videos = youtube_search(words_to_search)
 
-	if entitylist == '':
-		entitylist = "None Detected"
-	if keywordlist == '':
-		keywordlist = "None Detected"
+	if entity_list == '':
+		entity_list = "None Detected"
+	if keyword_list == '':
+		keyword_list = "None Detected"
 	
 	'''
 	###################
@@ -84,32 +85,25 @@ def search_results(query):
 	uploaddate = datetime.datetime.strptime(video.published, '%Y-%m-%d %H:%M:%S')
 
 
-	titlesearch_videos = youtube_search(video.title)			#search title 
+	titlesearch_videos = youtube_search(video.title)	#search title 
 
-	keywordvideo_prev = []
-	for video in keyword_videos:
-		if video.get('time') < uploaddate:
-			keyword_videos.remove(video)
-			keywordvideo_prev.append(video)
+	keyword_video_earlier = [video for video in keyword_videos if video.get('time') < uploaddate]
+	keyword_video_later = [video for video in keyword_videos if video.get('time') >= uploaddate]
 
-	titlevideo_prev = []
-	for video in titlesearch_videos:
-		if video.get('time') < uploaddate:
-			titlesearch_videos.remove(video)
-			titlevideo_prev.append(video)
-
+	title_video_earlier = [video for video in titlesearch_videos if video.get('time') < uploaddate]
+	title_video_later = [video for video in titlesearch_videos if video.get('time') >= uploaddate]
 
 	return render_template('search_results.html',
 							query=query,
-							entitylist = entitylist,
-							keywordlist = keywordlist,
+							entity_list = entity_list,
+							keyword_list = keyword_list,
 							text = yttext,
 							words_to_search = words_to_search,
-							keyword_videos = keyword_videos,
-							keywordvideo_prev = keywordvideo_prev,
+							keyword_video_later = keyword_video_later,
+							keyword_video_earlier = keyword_video_earlier,
 							videotitle = videotitle,
-							titlesearch_videos = titlesearch_videos,
-							titlevideo_prev = titlevideo_prev,
+							title_video_later = title_video_later,
+							title_video_earlier = title_video_earlier,
 							uploaddate = uploaddate)
 
 
