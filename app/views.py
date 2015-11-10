@@ -60,12 +60,12 @@ def search_results(query):
 	for entity in all_entities:																	#creates a list of all entities and keywords for reference
 		if float(entity['relevance']) > IMPORTANCE_BOUNDARY:													#filters out any entities/keywords with relevance less than 9 (out of 10)
 			words_to_search += entity['text']+' '
-		entitylist += smart_str(entity['text'])+'('+smart_str(entity['relevance'])+')'+' '
+		entitylist += entity['text']+'('+entity['relevance']+')'+' '
 	allkeywords = keywords['keywords']
 	for keyword in allkeywords:
 		if float(keyword['relevance']) > IMPORTANCE_BOUNDARY:
 			words_to_search += keyword['text']+' '
-		keywordlist += smart_str(keyword['text'])+'('+smart_str(keyword['relevance'])+')'+' '
+		keywordlist += keyword['text']+'('+keyword['relevance']+')'+' '
 
 	keyword_videos = youtube_search(words_to_search)
 

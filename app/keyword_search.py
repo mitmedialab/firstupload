@@ -10,7 +10,6 @@ import json
 import os
 
 import requests
-from django.utils.encoding import smart_str
 
 
 #!/usr/bin/env python
